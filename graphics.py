@@ -82,7 +82,7 @@ for i in range(0,count):
   
 # libraries to be imported 
 fromaddr = "kjain30710@gmail.com"
-toaddr = "shishirpillai@gmail.com"
+toaddr = "ysj30797.kj@gmail.com"
 password = "kanishkjain123"
    
 # instance of MIMEMultipart 
@@ -105,7 +105,7 @@ msg.attach(MIMEText(body, 'plain'))
   
 # open the file to be sent  
 filename = "graphicscard.csv"
-attachment = open("C:\\Users\\ysj30\\Desktop\\Github\\scraping\\graphicscard.csv", "rb") 
+attachment = open("graphicscard.csv", "rb") 
   
 # instance of MIMEBase and named as p 
 p = MIMEBase('application', 'octet-stream') 
