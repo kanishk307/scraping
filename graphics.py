@@ -1,6 +1,10 @@
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
-
+import smtplib 
+from email.mime.multipart import MIMEMultipart 
+from email.mime.text import MIMEText 
+from email.mime.base import MIMEBase 
+from email import encoders
 
 myurl="https://www.newegg.com/Video-Cards-Video-Devices/Category/ID-38?Tpk=graphics%20card"
 
@@ -72,3 +76,65 @@ for i in range(0,count):
 # 	f.write(currentprice + "\n")
 
 # f.close()
+
+# Python code to illustrate Sending mail with attachments 
+# from your Gmail account  
+  
+# libraries to be imported 
+fromaddr = "kjain30710@gmail.com"
+toaddr = "shishirpillai@gmail.com"
+password = "kanishkjain123"
+   
+# instance of MIMEMultipart 
+msg = MIMEMultipart() 
+  
+# storing the senders email address   
+msg['From'] = fromaddr 
+  
+# storing the receivers email address  
+msg['To'] = toaddr 
+  
+# storing the subject  
+msg['Subject'] = "Latest Graphics Card prices from Chegg"
+  
+# string to store the body of the mail 
+body = "Here are the top 12 graphic cards from chegg"
+  
+# attach the body with the msg instance 
+msg.attach(MIMEText(body, 'plain')) 
+  
+# open the file to be sent  
+filename = "graphicscard.csv"
+attachment = open("C:\\Users\\ysj30\\Desktop\\Github\\scraping\\graphicscard.csv", "rb") 
+  
+# instance of MIMEBase and named as p 
+p = MIMEBase('application', 'octet-stream') 
+  
+# To change the payload into encoded form 
+p.set_payload((attachment).read()) 
+  
+# encode into base64 
+encoders.encode_base64(p) 
+   
+p.add_header('Content-Disposition', "attachment; filename= %s" % filename) 
+  
+# attach the instance 'p' to instance 'msg' 
+msg.attach(p) 
+  
+# creates SMTP session 
+s = smtplib.SMTP('smtp.gmail.com', 587) 
+  
+# start TLS for security 
+s.starttls() 
+  
+# Authentication 
+s.login(fromaddr, password) 
+  
+# Converts the Multipart msg into a string 
+text = msg.as_string() 
+  
+# sending the mail 
+s.sendmail(fromaddr, toaddr, text) 
+  
+# terminating the session 
+s.quit() 
